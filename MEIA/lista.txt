@@ -1,2 +1,3 @@
 kevin|bonilla|1|0
 bonilla|andres|1|0
+kevin|andres|1|0

@@ -196,7 +196,7 @@ public class ingreso extends javax.swing.JFrame {
                                         {
                                             usuario nuevoForm = new usuario();
                                             nuevoForm.setVisible(true);
-                                            nuevoForm.txtInfo.setText("Hola "+split[0]);
+                                            nuevoForm.txtInfo.setText(split[0]);
                                             nuevoForm.txtRecibio.setText(verificarSolicitudes(split[0]));
                                         }
                                         

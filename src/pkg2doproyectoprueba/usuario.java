@@ -7,9 +7,11 @@ package pkg2doproyectoprueba;
 
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import javax.swing.Icon;
@@ -45,6 +47,9 @@ public class usuario extends javax.swing.JFrame {
         btnNegar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        btnGrupo = new javax.swing.JButton();
+        txtGrupo = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,30 +76,47 @@ public class usuario extends javax.swing.JFrame {
 
         jLabel1.setText("Solicitud de:");
 
+        btnGrupo.setText("Crear Grupo");
+        btnGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrupoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtRecibio, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNegar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAceptar)
-                .addGap(159, 159, 159))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(txtInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnviar)
                 .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addComponent(txtInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRecibio, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(btnGrupo)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNegar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAceptar)
+                .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +133,13 @@ public class usuario extends javax.swing.JFrame {
                     .addComponent(txtRecibio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNegar)
                     .addComponent(jLabel1))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGrupo)
+                    .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -212,7 +240,6 @@ public class usuario extends javax.swing.JFrame {
     {
         File pathFolderMEIA = new File("MEIA");
         String strPath = pathFolderMEIA + "/lista.txt";
-        //String[] strCol = {"usuario","nombre","apellido","contraseña","rol","fecha","correo","telefono","path","fotografia","descripcion","estatus"};
         try
         {
         RandomAccessFile filetoUse = new RandomAccessFile(strPath, "rw");
@@ -221,16 +248,10 @@ public class usuario extends javax.swing.JFrame {
         {
             String linea = filetoUse.readLine();
             String[] str = linea.split("\\|");
-            //String parametro = "nombre";
-            //String usuario = "sebas10";
-            //String original = "Sebastian";
-            //String cambiar = "Carlos";
             String lineaCambiada ="";
  
                 if(linea.contains(nombre))
                 {
-                   
-
                         for(int j = 0; j<4;j++)
                         {
                             if(j == 0)
@@ -241,7 +262,6 @@ public class usuario extends javax.swing.JFrame {
                             {
                                 if(j == 2)
                                 {
-
                                         lineaCambiada += "|" + str[j].replace("1", "0");
                                 }
                                 else 
@@ -252,22 +272,16 @@ public class usuario extends javax.swing.JFrame {
                             }
 
                         }
-                        
-                    
-                        
-                       long suma = linea.length();
+                        long suma = linea.length();
                         System.out.println("esto es el largo de la linea" + suma);
                         long position = filetoUse.getFilePointer();   
                         System.out.println("esto devuelve el filepointer" + position);
                         System.out.println("esto devuelve al final: " + (filetoUse.getFilePointer()-(suma+2)));
-                        filetoUse.seek(filetoUse.getFilePointer()-(suma+2));
-                        
+                        filetoUse.seek(filetoUse.getFilePointer()-(suma+2));                       
                         filetoUse.write((lineaCambiada + System.getProperty( "line.separator" )).getBytes());
-                        return true;
-                   
+                        return true;                   
                 }
-                return false;
-                
+                return false;             
         }
         filetoUse.close();
         }
@@ -290,54 +304,54 @@ public class usuario extends javax.swing.JFrame {
     public void buscar()
     {
         File pathFolderMEIA = new File("MEIA");
-                String strPath = pathFolderMEIA + "/usuario.txt";
-                String strError;
-                String lineaAMostrar = "";
-                boolean usuarioYPasswordCorrecto = false;
-                File ArchivoUsuariosTxt = new File(strPath);
-                
-                FileReader LecturaArchivo;
-                try {
-                    LecturaArchivo = new FileReader(ArchivoUsuariosTxt);
-                    BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
-                    String linea="";
-                    try {
-                        linea =LeerArchivo.readLine();
-                        String[] str;
-                        usuario objUsuarioArchivo = new usuario();
-                        if (linea=="")
+        String strPath = pathFolderMEIA + "/usuario.txt";
+        String strError;
+        String lineaAMostrar = "";
+        boolean usuarioYPasswordCorrecto = false;
+        File ArchivoUsuariosTxt = new File(strPath);
+
+        FileReader LecturaArchivo;
+        try {
+            LecturaArchivo = new FileReader(ArchivoUsuariosTxt);
+            BufferedReader LeerArchivo = new BufferedReader(LecturaArchivo);
+            String linea="";
+            try {
+                linea =LeerArchivo.readLine();
+                String[] str;
+                usuario objUsuarioArchivo = new usuario();
+                if (linea=="")
+                {
+                    LecturaArchivo.close();
+                    LeerArchivo.close();
+                }
+                else
+                {
+                    while(linea != null)
+                    {
+                        str =linea.split("\\|");
+                        if(linea != "")
                         {
-                            LecturaArchivo.close();
-                            LeerArchivo.close();
-                        }
-                        else
-                        {
-                            while(linea != null)
-                            {
-                                str =linea.split("\\|");
-                                if(linea != "")
+
+                            if(linea.contains(txtBuscar.getText()))
                                 {
-                                    
-                                    if(linea.contains(txtBuscar.getText()))
-                                        {
-                                            buscar nuevoForm = new buscar();
-                                            nuevoForm.setVisible(true);
-                                            nuevoForm.txtNombre.setText(txtBuscar.getText());
-                                            nuevoForm.txtEmisor.setText(txtInfo.getText());
-                                        }
+                                    buscar nuevoForm = new buscar();
+                                    nuevoForm.setVisible(true);
+                                    nuevoForm.txtNombre.setText(txtBuscar.getText());
+                                    nuevoForm.txtEmisor.setText(txtInfo.getText());
                                 }
-                                linea = LeerArchivo.readLine();
-                            }
                         }
-                    }
-                    catch (IOException ex) {
-                        strError= ex.getMessage().toString();
+                        linea = LeerArchivo.readLine();
                     }
                 }
-                catch (FileNotFoundException ex) {
+            }
+            catch (IOException ex) {
                 strError= ex.getMessage().toString();
-                //return false;
-            } 
+            }
+        }
+        catch (FileNotFoundException ex) {
+        strError= ex.getMessage().toString();
+        //return false;
+    } 
     }
     private void btnNegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNegarActionPerformed
         // TODO add your handling code here:
@@ -368,6 +382,53 @@ public class usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         buscar();
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    public boolean crearGrupo()
+    {
+                File Archivo = new File("MEIA/grupo.txt");
+        
+        if(Archivo.exists()!=true)
+        {
+            try
+            {
+                Archivo.createNewFile();
+                try (FileWriter Escribir = new FileWriter(Archivo,true)) {
+                    Escribir.write((txtInfo.getText() +"|" + txtGrupo.getText() + "|" + txtDescripcion.getText() +"|0|datetime|1") + System.getProperty( "line.separator" ));
+                    Escribir.close();                    
+                }
+                return true;
+            }
+            catch(IOException ex)
+            {
+                return false;
+            }            
+        }
+        else
+        {   
+           //File Archivo = new File(strPath);
+            try
+            {
+                FileWriter Escribir = new FileWriter(Archivo,true);
+                BufferedWriter bw = new BufferedWriter(Escribir);
+                bw.write(txtInfo.getText() +"|" + txtGrupo.getText() + "|" + txtDescripcion.getText() +"|0|datetime|1" + System.getProperty( "line.separator" ));
+                bw.close();
+                Escribir.close();
+                
+                return true;
+            }
+            catch(IOException ex)
+            {
+                return false;
+            } 
+        }
+    }
+    private void btnGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrupoActionPerformed
+        // TODO add your handling code here:
+        crearGrupo();
+        
+      
+                
+    }//GEN-LAST:event_btnGrupoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,9 +468,12 @@ public class usuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnGrupo;
     private javax.swing.JButton btnNegar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtGrupo;
     public static javax.swing.JTextField txtInfo;
     public static javax.swing.JTextField txtRecibio;
     // End of variables declaration//GEN-END:variables
